@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Typography, Zoom, IconButton } from '@material-ui/core';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 
 import Timer from '../../components/Timer';
+import { get } from '../../api';
 import { useLocalStorage } from '../../hooks';
 import { HomeContainer, SubSection, Action } from './style';
 
@@ -24,9 +25,25 @@ const randomText = [
 ];
 
 const Home = () => {
+  const [openDate, setOpenDate] = useState(enableDate);
   const [page, setPage] = useLocalStorage('home-page-no', 0);
-  const enableApp = new Date().valueOf() > new Date(enableDate).valueOf();
-  // console.log('enableApp', enableApp);
+  const enableApp = new Date().valueOf() > new Date(openDate).valueOf();
+
+  useEffect(async () => {
+    try {
+      const response = await get(
+        'http://worldtimeapi.org/api/timezone/asia/kolkata'
+      );
+      console.log('response', response);
+      if (response && response.utc_datetime) {
+        setOpenDate(new Date(response.utc_datetime).toISOString());
+      }
+    } catch (e) {
+      console.log('error', e);
+    }
+  }, []);
+
+  console.log('openDate', { openDate, page });
 
   if (!enableApp)
     return (
@@ -47,7 +64,7 @@ const Home = () => {
               className="description"
               color="textPrimary"
             >
-              <Timer to={enableDate} />
+              <Timer to={openDate} />
             </Typography>
             <Typography
               align="center"

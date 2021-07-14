@@ -3,6 +3,9 @@
     "browser": true,
     "es2021": true
   },
+  "globals": {
+    "location": true
+  },
   "extends": ["plugin:react/recommended", "airbnb", "prettier"],
   "parserOptions": {
     "ecmaFeatures": {
@@ -14,6 +17,7 @@
   "plugins": ["react"],
   "rules": {
     "no-console": "off",
+    "no-undef": "warn",
     "camelcase": "warn",
     "react/no-array-index-key": "off",
     "react/jsx-filename-extension": [0, { "allow": "as-needed" }],
