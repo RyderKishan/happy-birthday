@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Typography, Zoom, IconButton } from '@material-ui/core';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
@@ -25,27 +25,21 @@ const randomText = [
 ];
 
 const Home = () => {
-  const [openDate, setOpenDate] = useState(enableDate);
   const [page, setPage] = useLocalStorage('home-page-no', 0);
-  const enableApp = new Date().valueOf() > new Date(openDate).valueOf();
+  const enableApp = new Date().valueOf() > new Date(enableDate).valueOf();
 
-  useEffect(async () => {
-    try {
-      const response = await get(
-        'http://worldtimeapi.org/api/timezone/asia/kolkata'
-      );
-      console.log('response', response);
-      if (response && response.utc_datetime) {
-        setOpenDate(new Date(response.utc_datetime).toISOString());
-      }
-    } catch (e) {
-      console.log('error', e);
-    }
-  }, []);
+  // useEffect(async () => {
+  //   try {
+  //     const response = await get(
+  //       'http://worldtimeapi.org/api/timezone/asia/kolkata'
+  //     );
+  //     console.log('response', response);
+  //   } catch (e) {
+  //     console.log('error', e);
+  //   }
+  // }, []);
 
-  console.log('openDate', { openDate, page });
-
-  if (!enableApp)
+  // if (!enableApp)
     return (
       <HomeContainer>
         <Zoom in>
@@ -64,7 +58,7 @@ const Home = () => {
               className="description"
               color="textPrimary"
             >
-              <Timer to={openDate} />
+              <Timer to={enableDate} />
             </Typography>
             <Typography
               align="center"
@@ -83,64 +77,64 @@ const Home = () => {
       </HomeContainer>
     );
 
-  return (
-    <HomeContainer>
-      {page === 0 && (
-        <Zoom in>
-          <SubSection>
-            <Typography
-              align="center"
-              gutterBottom
-              className="heading"
-              color="textPrimary"
-            >
-              Hi Baby!
-            </Typography>
-            <Typography
-              align="center"
-              variant="caption"
-              className="description"
-              color="textPrimary"
-            >
-              Page 0
-            </Typography>
-          </SubSection>
-        </Zoom>
-      )}
-      {page === 1 && (
-        <Zoom in>
-          <SubSection>
-            <Typography color="textPrimary">Page 0</Typography>
-          </SubSection>
-        </Zoom>
-      )}
-      {page === 2 && (
-        <Zoom in>
-          <SubSection>
-            <Typography color="textPrimary">Page 0</Typography>
-          </SubSection>
-        </Zoom>
-      )}
-      <Action>
-        <IconButton
-          color="secondary"
-          aria-label="before"
-          disabled={page === 0}
-          onClick={() => setPage((prev) => prev - 1)}
-        >
-          <NavigateBeforeIcon />
-        </IconButton>
-        <IconButton
-          color="secondary"
-          aria-label="next"
-          disabled={page === 2}
-          onClick={() => setPage((prev) => prev + 1)}
-        >
-          <NavigateNextIcon />
-        </IconButton>
-      </Action>
-    </HomeContainer>
-  );
+  // return (
+  //   <HomeContainer>
+  //     {page === 0 && (
+  //       <Zoom in>
+  //         <SubSection>
+  //           <Typography
+  //             align="center"
+  //             gutterBottom
+  //             className="heading"
+  //             color="textPrimary"
+  //           >
+  //             Hi Baby!
+  //           </Typography>
+  //           <Typography
+  //             align="center"
+  //             variant="caption"
+  //             className="description"
+  //             color="textPrimary"
+  //           >
+  //             Page 0
+  //           </Typography>
+  //         </SubSection>
+  //       </Zoom>
+  //     )}
+  //     {page === 1 && (
+  //       <Zoom in>
+  //         <SubSection>
+  //           <Typography color="textPrimary">Page 0</Typography>
+  //         </SubSection>
+  //       </Zoom>
+  //     )}
+  //     {page === 2 && (
+  //       <Zoom in>
+  //         <SubSection>
+  //           <Typography color="textPrimary">Page 0</Typography>
+  //         </SubSection>
+  //       </Zoom>
+  //     )}
+  //     <Action>
+  //       <IconButton
+  //         color="secondary"
+  //         aria-label="before"
+  //         disabled={page === 0}
+  //         onClick={() => setPage((prev) => prev - 1)}
+  //       >
+  //         <NavigateBeforeIcon />
+  //       </IconButton>
+  //       <IconButton
+  //         color="secondary"
+  //         aria-label="next"
+  //         disabled={page === 2}
+  //         onClick={() => setPage((prev) => prev + 1)}
+  //       >
+  //         <NavigateNextIcon />
+  //       </IconButton>
+  //     </Action>
+  //   </HomeContainer>
+  // );
 };
 
 export default Home;
