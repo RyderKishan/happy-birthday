@@ -9,19 +9,20 @@ const order = ['years', 'months', 'days', 'hours', 'minutes', 'seconds'];
 let interval;
 
 const Timer = (props) => {
-  const { to } = props;
+  const { to, timeOffset, callBackOnTime } = props;
   const [difference, setDifference] = React.useState(
-    toDate(new Date(to) - new Date())
+    toDate(new Date(to) - (new Date() - timeOffset))
   );
   React.useEffect(() => {
     interval = setInterval(() => {
-      const diff = toDate(new Date(to) - new Date());
+      const diff = toDate(new Date(to) - (new Date() - timeOffset));
       setDifference(diff);
     }, 1000);
   }, []);
   React.useEffect(() => {
-    if (new Date(to) - new Date() <= 0) {
+    if (new Date(to) - (new Date() - timeOffset) <= 0) {
       clearInterval(interval);
+      callBackOnTime();
     }
   }, [difference]);
   return (
@@ -45,6 +46,13 @@ const Timer = (props) => {
 
 export default Timer;
 
+Timer.defaultProps = {
+  timeOffset: 0,
+  callBackOnTime: () => {}
+};
+
 Timer.propTypes = {
   to: PropTypes.string.isRequired,
+  callBackOnTime: PropTypes.func,
+  timeOffset: PropTypes.number
 };

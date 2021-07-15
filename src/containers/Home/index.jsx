@@ -1,21 +1,67 @@
-import React, { useEffect } from 'react';
-import { Typography, Zoom, IconButton } from '@material-ui/core';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Typography, Zoom, CircularProgress } from '@material-ui/core';
+import WarningIcon from '@material-ui/icons/Warning';
 import Timer from '../../components/Timer';
-import { get } from '../../api';
-import { useLocalStorage } from '../../hooks';
 
-import { HomeContainer, SubSection, Action } from './styles';
+import { HomeContainer, SubSection } from './styles';
 import { enableDate, randomText } from './constants';
-import { useTime } from './hooks';
+import { useTimeOffset } from './hooks';
+import Screen from './Screen';
 
-const Home = () => {
-  const [page, setPage] = useLocalStorage('home-page-no', 0);
-  const enableApp = new Date().valueOf() > new Date(enableDate).valueOf();
-  const { data } = useTime();
-  console.log('data', data);
-  if (!enableApp)
+const Home = (props) => {
+  const { setSnack } = props;
+  const [showApp, toggleApp] = React.useState(false);
+  const { data: timeOffset = 0, isLoading, isError } = useTimeOffset();
+  React.useEffect(() => {
+    if (timeOffset === 0 || !timeOffset) return;
+    const toToggleApp =
+      new Date().valueOf() - timeOffset > new Date(enableDate).valueOf();
+    toggleApp(toToggleApp);
+    if (Math.abs(timeOffset) > 60000 && !toToggleApp) {
+      setSnack({
+        severity: 'warning',
+        message: 'System time not in sync'
+      });
+    }
+  }, [timeOffset]);
+  const callBackOnTime = () => {
+    toggleApp(
+      new Date().valueOf() - timeOffset > new Date(enableDate).valueOf()
+    );
+  };
+  if (isLoading)
+    return (
+      <HomeContainer>
+        <SubSection>
+          <CircularProgress />
+        </SubSection>
+      </HomeContainer>
+    );
+  if (isError)
+    return (
+      <HomeContainer>
+        <SubSection>
+          <Typography
+            align="center"
+            gutterBottom
+            className="heading"
+            color="textPrimary"
+          >
+            <WarningIcon fontSize="large" />
+          </Typography>
+          <Typography
+            align="center"
+            variant="caption"
+            className="description"
+            color="textPrimary"
+          >
+            Network Error
+          </Typography>
+        </SubSection>
+      </HomeContainer>
+    );
+  if (!showApp)
     return (
       <HomeContainer>
         <Zoom in>
@@ -34,7 +80,11 @@ const Home = () => {
               className="description"
               color="textPrimary"
             >
-              <Timer to={enableDate} />
+              <Timer
+                callBackOnTime={callBackOnTime}
+                timeOffset={timeOffset}
+                to={enableDate}
+              />
             </Typography>
             <Typography
               align="center"
@@ -53,64 +103,15 @@ const Home = () => {
       </HomeContainer>
     );
 
-  return (
-    <HomeContainer>
-      {page === 0 && (
-        <Zoom in>
-          <SubSection>
-            <Typography
-              align="center"
-              gutterBottom
-              className="heading"
-              color="textPrimary"
-            >
-              Hi Baby!
-            </Typography>
-            <Typography
-              align="center"
-              variant="caption"
-              className="description"
-              color="textPrimary"
-            >
-              Page 0
-            </Typography>
-          </SubSection>
-        </Zoom>
-      )}
-      {page === 1 && (
-        <Zoom in>
-          <SubSection>
-            <Typography color="textPrimary">Page 0</Typography>
-          </SubSection>
-        </Zoom>
-      )}
-      {page === 2 && (
-        <Zoom in>
-          <SubSection>
-            <Typography color="textPrimary">Page 0</Typography>
-          </SubSection>
-        </Zoom>
-      )}
-      <Action>
-        <IconButton
-          color="secondary"
-          aria-label="before"
-          disabled={page === 0}
-          onClick={() => setPage((prev) => prev - 1)}
-        >
-          <NavigateBeforeIcon />
-        </IconButton>
-        <IconButton
-          color="secondary"
-          aria-label="next"
-          disabled={page === 2}
-          onClick={() => setPage((prev) => prev + 1)}
-        >
-          <NavigateNextIcon />
-        </IconButton>
-      </Action>
-    </HomeContainer>
-  );
+  return <Screen />;
+};
+
+Home.defaultProps = {
+  setSnack: () => {}
+};
+
+Home.propTypes = {
+  setSnack: PropTypes.func
 };
 
 export default Home;

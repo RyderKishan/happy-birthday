@@ -21,6 +21,7 @@
   "plugins": ["react"],
   "rules": {
     "no-console": "off",
+    "react/jsx-fragments": "off",
     "camelcase": "warn",
     "react/no-array-index-key": "off",
     "react/jsx-filename-extension": [0, { "allow": "as-needed" }],

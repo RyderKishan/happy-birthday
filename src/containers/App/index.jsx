@@ -34,6 +34,7 @@ const GlobalStyle = createGlobalStyle`
     sans-serif;
   }
   main#root {
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     width: 100vw;
