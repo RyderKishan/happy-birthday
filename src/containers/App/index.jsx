@@ -4,13 +4,14 @@ import {
   ThemeProvider as StyledThemeProvider,
   createGlobalStyle,
 } from 'styled-components';
+import { QueryClientProvider, QueryClient } from 'react-query';
 import { BrowserRouter } from 'react-router-dom';
 import { useMediaQuery } from '@material-ui/core';
 import { blue, orange } from '@material-ui/core/colors';
 import HappyBirthday from '../HappyBirthday';
 
 const createAppTheme = (type) =>
-createTheme({
+  createTheme({
     palette: {
       type,
       primary: blue,
@@ -33,6 +34,7 @@ const GlobalStyle = createGlobalStyle`
     sans-serif;
   }
   main#root {
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     width: 100vw;
@@ -40,16 +42,29 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      refetchOnWindowFocus: false,
+      staleTime: 300000,
+      cacheTime: 300000,
+    },
+  },
+});
+
 const App = () => {
   const mode = useMediaQuery('(prefers-color-scheme: dark)') ? 'dark' : 'light';
   return (
     <ThemeProvider theme={createAppTheme(mode)}>
-      <StyledThemeProvider theme={createAppTheme(mode)}>
-        <BrowserRouter>
-          <HappyBirthday />
-        </BrowserRouter>
-        <GlobalStyle />
-      </StyledThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <StyledThemeProvider theme={createAppTheme(mode)}>
+          <BrowserRouter>
+            <HappyBirthday />
+          </BrowserRouter>
+          <GlobalStyle />
+        </StyledThemeProvider>
+      </QueryClientProvider>
     </ThemeProvider>
   );
 };

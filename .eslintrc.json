@@ -6,7 +6,11 @@
   "globals": {
     "location": true
   },
-  "extends": ["plugin:react/recommended", "airbnb", "prettier"],
+  "extends": [
+    "plugin:react/recommended",
+    "airbnb",
+    "prettier"
+  ],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -17,7 +21,7 @@
   "plugins": ["react"],
   "rules": {
     "no-console": "off",
-    "no-undef": "warn",
+    "react/jsx-fragments": "off",
     "camelcase": "warn",
     "react/no-array-index-key": "off",
     "react/jsx-filename-extension": [0, { "allow": "as-needed" }],
