@@ -1,6 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Typography, Zoom, CircularProgress } from '@material-ui/core';
+import {
+  Button,
+  Typography,
+  Zoom,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  DialogContent
+} from '@material-ui/core';
 import WarningIcon from '@material-ui/icons/Warning';
 import Timer from '../../components/Timer';
 
@@ -10,8 +19,10 @@ import { useTimeOffset } from './hooks';
 import Screen from './Screen';
 
 const Home = (props) => {
+  const randomIndex = Math.floor(Math.random() * randomText.length - 1) + 1;
   const { setSnack } = props;
   const [showApp, toggleApp] = React.useState(false);
+  const [initialOpen, setInitialOpen] = React.useState(randomIndex % 5 === 0);
   const { data: timeOffset = 0, isLoading, isError } = useTimeOffset();
   React.useEffect(() => {
     if (timeOffset === 0 || !timeOffset) return;
@@ -64,6 +75,27 @@ const Home = (props) => {
   if (!showApp)
     return (
       <HomeContainer>
+        <Dialog
+          onClose={() => setInitialOpen(false)}
+          aria-labelledby="simple-dialog-title"
+          open={initialOpen}
+        >
+          <DialogTitle id="simple-dialog-title">Warning</DialogTitle>
+          <DialogContent>
+            <Typography variant="subtitle2">
+              This site is made to motivate baby to learn React, HTML and CSS
+            </Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => setInitialOpen(false)}
+            >
+              Ok
+            </Button>
+          </DialogActions>
+        </Dialog>
         <Zoom in>
           <SubSection>
             <Typography
@@ -92,11 +124,7 @@ const Home = (props) => {
               className="description"
               color="textPrimary"
             >
-              {
-                randomText[
-                  Math.floor(Math.random() * randomText.length - 1) + 1
-                ]
-              }
+              {randomText[randomIndex]}
             </Typography>
           </SubSection>
         </Zoom>
