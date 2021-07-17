@@ -15,7 +15,7 @@ import Timer from '../../components/Timer';
 
 import { HomeContainer, SubSection } from './styles';
 import { enableDate, randomText } from './constants';
-import { useTimeOffset } from './hooks';
+import { useTimeOffset, useCallHook } from './hooks';
 import Screen from './Screen';
 
 const Home = (props) => {
@@ -24,13 +24,14 @@ const Home = (props) => {
   const [showApp, toggleApp] = React.useState(false);
   const [initialOpen, setInitialOpen] = React.useState(randomIndex % 5 === 0);
   const { data: timeOffset = 0, isLoading, isError } = useTimeOffset();
+  const { mutate: callHook } = useCallHook();
   React.useEffect(() => {
     if (timeOffset === 0 || !timeOffset) return;
     const toToggleApp =
       new Date().valueOf() - timeOffset > new Date(enableDate).valueOf();
     toggleApp(toToggleApp);
     if (toToggleApp) {
-      // https://webhook.site/9865ba9c-4b3d-4e22-8a7a-1f08871b0aba
+      callHook();
     }
     if (Math.abs(timeOffset) > 60000 && !toToggleApp) {
       setSnack({
