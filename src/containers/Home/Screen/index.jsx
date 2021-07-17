@@ -7,6 +7,7 @@ import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import { useLocalStorage } from '../../../hooks';
 import { HomeContainer, SubSection, Action } from '../styles';
 import { allScreens } from './constants';
+import Puzzle from '../../../components/Puzzle';
 
 const getRenderElement = (screen) => {
   switch (screen.type) {
@@ -56,6 +57,31 @@ const getRenderElement = (screen) => {
           </Typography>
         </SubSection>
       );
+    case 'video':
+      return (
+        <SubSection>
+          <Typography
+            align="center"
+            gutterBottom
+            className="heading"
+            color="textPrimary"
+          >
+            {screen.heading}
+          </Typography>
+          <video controls>
+            <source src={`/video/${screen.src}`} type="video/mp4" />
+            Your browser does not support the video element.
+          </video>
+          <Typography
+            align="center"
+            variant="caption"
+            className="description"
+            color="textPrimary"
+          >
+            {screen.text}
+          </Typography>
+        </SubSection>
+      );
     case 'image':
       return (
         <SubSection>
@@ -80,6 +106,12 @@ const getRenderElement = (screen) => {
           >
             {screen.text}
           </Typography>
+        </SubSection>
+      );
+    case 'puzzle':
+      return (
+        <SubSection>
+          <Puzzle screen={screen} />
         </SubSection>
       );
     default:

@@ -6,7 +6,7 @@ const ErrorObject = async (response) => {
   const error = {
     status: pathOr(500, ['status'], response),
     url: pathOr('', ['url'], response),
-    statusText: pathOr('', ['statusText'], response),
+    statusText: pathOr('', ['statusText'], response)
   };
   try {
     error.data = await response.json();
@@ -17,20 +17,20 @@ const ErrorObject = async (response) => {
 };
 
 const headersForAllRequest = {
-  'Content-Type': 'application/json',
+  'Content-Type': 'application/json'
 };
 
 const get = async (endpoint, headers, options = {}) => {
   const commonHeaders = {
-    ...headersForAllRequest,
+    ...headersForAllRequest
   };
   const commonOptions = {
     method: 'GET',
-    ...options,
+    ...options
   };
   const response = await fetch(endpoint, {
     ...commonOptions,
-    headers: { ...commonHeaders, ...headers },
+    headers: { ...commonHeaders, ...headers }
   });
   if (response.ok && response.status === 200) {
     return response.json();
@@ -41,15 +41,15 @@ const get = async (endpoint, headers, options = {}) => {
 
 const del = async (endpoint, headers, options = {}) => {
   const commonHeaders = {
-    ...headersForAllRequest,
+    ...headersForAllRequest
   };
   const commonOptions = {
     method: 'DELETE',
-    ...options,
+    ...options
   };
   const response = await fetch(endpoint, {
     ...commonOptions,
-    headers: { ...commonHeaders, ...headers },
+    headers: { ...commonHeaders, ...headers }
   });
   if (response.ok && response.status === 200) {
     return response.json();
@@ -60,16 +60,16 @@ const del = async (endpoint, headers, options = {}) => {
 
 const post = async (endpoint, body, headers, options = {}) => {
   const commonHeaders = {
-    ...headersForAllRequest,
+    ...headersForAllRequest
   };
   const commonOptions = {
     method: 'POST',
-    ...options,
+    ...options
   };
   const response = await fetch(endpoint, {
     ...commonOptions,
     body: JSON.stringify(body),
-    headers: { ...commonHeaders, ...headers },
+    headers: { ...commonHeaders, ...headers }
   });
   if (response.ok && response.status === 200) {
     return response.json();
@@ -80,16 +80,16 @@ const post = async (endpoint, body, headers, options = {}) => {
 
 const put = async (endpoint, body, headers, options = {}) => {
   const commonHeaders = {
-    ...headersForAllRequest,
+    ...headersForAllRequest
   };
   const commonOptions = {
     method: 'PUT',
-    ...options,
+    ...options
   };
   const response = await fetch(endpoint, {
     ...commonOptions,
     body: JSON.stringify(body),
-    headers: { ...commonHeaders, ...headers },
+    headers: { ...commonHeaders, ...headers }
   });
   if (response.ok && response.status === 200) {
     return response.json();

@@ -3,28 +3,28 @@ import moment from 'moment-timezone';
 const order = [
   {
     mandatory: false,
-    name: 'years',
+    name: 'years'
   },
   {
     mandatory: false,
-    name: 'months',
+    name: 'months'
   },
   {
     mandatory: false,
-    name: 'days',
+    name: 'days'
   },
   {
     mandatory: true,
-    name: 'hours',
+    name: 'hours'
   },
   {
     mandatory: true,
-    name: 'minutes',
+    name: 'minutes'
   },
   {
     mandatory: true,
-    name: 'seconds',
-  },
+    name: 'seconds'
+  }
 ];
 
 export const downloadFile = (value, fileName) => {
@@ -42,7 +42,7 @@ export const toDate = (ms) => {
     days: moment.duration(ms, 'ms').days(),
     hours: moment.duration(ms, 'ms').hours(),
     minutes: moment.duration(ms, 'ms').minutes(),
-    seconds: moment.duration(ms, 'ms').seconds(),
+    seconds: moment.duration(ms, 'ms').seconds()
   };
   order.every(({ name, mandatory }) => {
     if (mandatory) return true;

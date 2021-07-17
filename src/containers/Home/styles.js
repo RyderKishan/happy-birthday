@@ -11,14 +11,14 @@ export const HomeContainer = styled.section`
 `;
 
 export const SubSection = styled.article`
-  width: calc(100% - 4rem);
-  padding: 2rem;
+  width: calc(100% - 2rem);
+  padding: 1rem;
   display: grid;
   place-content: center;
   flex: 1;
   overflow: auto;
   & > div.image {
-    margin: 2rem auto;
+    margin: 1rem auto;
     overflow: hidden;
     flex: 1;
     & > img {
@@ -28,7 +28,11 @@ export const SubSection = styled.article`
     }
   }
   & > audio {
-    margin: 2rem 0;
+    margin: 1rem 0;
+  }
+  & > video {
+    margin: 1rem 0;
+    width: 100%;
   }
   & > p.heading {
     font-size: 1.25rem;
@@ -42,7 +46,7 @@ export const SubSection = styled.article`
 `;
 
 export const Action = styled.footer`
-  padding: 2rem;
+  padding: 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;

@@ -17,6 +17,6 @@ export const useTimeOffset = () =>
     {
       onError: (err) => {
         console.log('Error', err);
-      },
+      }
     }
   );

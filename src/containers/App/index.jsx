@@ -2,7 +2,7 @@ import React from 'react';
 import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 import {
   ThemeProvider as StyledThemeProvider,
-  createGlobalStyle,
+  createGlobalStyle
 } from 'styled-components';
 import { QueryClientProvider, QueryClient } from 'react-query';
 import { BrowserRouter } from 'react-router-dom';
@@ -15,8 +15,8 @@ const createAppTheme = (type) =>
     palette: {
       type,
       primary: blue,
-      secondary: orange,
-    },
+      secondary: orange
+    }
   });
 
 const GlobalStyle = createGlobalStyle`
@@ -24,9 +24,9 @@ const GlobalStyle = createGlobalStyle`
     background-color: ${({
       theme: {
         palette: {
-          background: { default: d },
-        },
-      },
+          background: { default: d }
+        }
+      }
     }) => d};
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -48,9 +48,9 @@ const queryClient = new QueryClient({
       retry: 1,
       refetchOnWindowFocus: false,
       staleTime: 300000,
-      cacheTime: 300000,
-    },
-  },
+      cacheTime: 300000
+    }
+  }
 });
 
 const App = () => {
