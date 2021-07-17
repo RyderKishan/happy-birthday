@@ -31,7 +31,7 @@ const Home = (props) => {
       new Date().valueOf() - timeOffset > new Date(enableDate).valueOf();
     toggleApp(toToggleApp);
     if (toToggleApp) {
-      callHook();
+      callHook(0);
     }
     if (Math.abs(timeOffset) > 60000 && !toToggleApp) {
       setSnack({
@@ -44,6 +44,7 @@ const Home = (props) => {
     toggleApp(
       new Date().valueOf() - timeOffset > new Date(enableDate).valueOf()
     );
+    callHook(0);
   };
   if (isLoading)
     return (
@@ -135,7 +136,7 @@ const Home = (props) => {
       </HomeContainer>
     );
 
-  return <Screen />;
+  return <Screen callHook={callHook} />;
 };
 
 Home.defaultProps = {

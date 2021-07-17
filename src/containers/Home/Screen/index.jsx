@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Typography, Zoom, IconButton } from '@material-ui/core';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
@@ -119,8 +120,13 @@ const getRenderElement = (screen) => {
   }
 };
 
-const Screen = () => {
+const Screen = (props) => {
+  const { callHook } = props;
   const [page, setPage] = useLocalStorage('screen-page-no', 0);
+
+  React.useEffect(() => {
+    if (page > 0) callHook(page);
+  }, [page]);
 
   return (
     <HomeContainer>
@@ -152,6 +158,14 @@ const Screen = () => {
       </Action>
     </HomeContainer>
   );
+};
+
+Screen.defaultProps = {
+  callHook: () => {}
+};
+
+Screen.propTypes = {
+  callHook: PropTypes.func
 };
 
 export default Screen;

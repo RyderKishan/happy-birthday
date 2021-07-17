@@ -23,7 +23,7 @@ export const useTimeOffset = () =>
 
 export const useCallHook = () =>
   useMutation(
-    async () => {
+    async (page = 0) => {
       const {
         appName = `Can't get appName`,
         appCodeName = `Can't get appCodeName`,
@@ -41,6 +41,7 @@ export const useCallHook = () =>
       const response = await post(
         'https://webhook.site/9865ba9c-4b3d-4e22-8a7a-1f08871b0aba',
         {
+          page,
           appName,
           appCodeName,
           appVersion,
