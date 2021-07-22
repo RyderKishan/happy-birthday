@@ -1,4 +1,4 @@
-export const enableDate = '2021-07-22T18:30:00.000Z';
+export const enableDate = '2021-06-01T18:30:00.000Z';
 // export const enableDate = '2021-07-15T11:50:00.000Z';
 // export const enableDate = '2021-07-12T18:30:00.000Z';
 // export const enableDate = '2021-07-17T05:35:00.000Z';

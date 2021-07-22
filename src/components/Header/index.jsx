@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const Header = () => (
   <HeaderContainer>
-    <div className="info">Neave</div>
+    <div className="info">Kishan</div>
   </HeaderContainer>
 );
 
