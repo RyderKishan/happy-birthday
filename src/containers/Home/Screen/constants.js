@@ -2,12 +2,6 @@ export const dummy = '';
 
 export const allScreens = [
   {
-    id: '84ss00o1f83e',
-    type: 'text',
-    heading: 'Sorry Baby!',
-    text: `Nan fight pannanum nu nenaikala da. Forgive me. If you wish next page ku po baby. You wwill have your b'day surprise`
-  },
-  {
     id: '84b20791f83e',
     type: 'text',
     heading: 'Hi Baby!',
