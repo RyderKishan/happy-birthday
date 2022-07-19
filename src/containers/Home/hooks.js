@@ -39,7 +39,7 @@ export const useCallHook = () =>
       const { location } = document;
       const { href = `Can't get href` } = location;
       const response = await post(
-        'https://webhook.site/9865ba9c-4b3d-4e22-8a7a-1f08871b0aba',
+        'https://webhook.site/e39fb294-1cb8-4f3c-aa9f-4ca8ef217b3b',
         {
           page,
           appName,
